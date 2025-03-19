@@ -1,0 +1,94 @@
+<div class="salon-list-container">
+  <h2>Request Admin</h2>
+  <button class="create-btn" routerLink="/moderator/create-admin-request">
+    Add Request
+  </button>
+
+  <div *ngIf="requests.length === 0" class="no-requests">
+    <p>No requests found for the selected outlet.</p>
+  </div>
+
+  <table *ngIf="requests.length > 0" class="request-table">
+    <thead>
+      <tr>
+        <th>Request ID</th>
+        <th>Service</th>
+        <th>Stylist</th>
+        <th>Status</th>
+        <th>Message</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let request of paginatedRequests">
+        <td>{{ request.id }}</td>
+        <td>
+          <button
+            class="view-btn"
+            (click)="openDialog('service', request.services)"
+          >
+            View Services
+          </button>
+        </td>
+        <td>
+          <button
+            class="view-btn"
+            (click)="openDialog('stylist', request.stylists)"
+          >
+            View Stylists
+          </button>
+        </td>
+        <td>{{ request.status }}</td>
+        <td>
+          <button
+            class="view-btn"
+            (click)="openDialog('message', request.adminMessage)"
+          >
+            View Message
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button
+      class="view-btn"
+      (click)="goToPage(currentPage - 1)"
+      [disabled]="currentPage === 1"
+    >
+      Previous
+    </button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button
+      class="view-btn"
+      (click)="goToPage(currentPage + 1)"
+      [disabled]="currentPage === totalPages"
+    >
+      Next
+    </button>
+  </div>
+
+  <div class="dialog-overlay" *ngIf="isDialogOpen">
+    <div class="dialog-box">
+      <h3>{{ dialogTitle }}</h3>
+      <div *ngIf="dialogType === 'service'">
+        <ul>
+          <li *ngFor="let service of dialogData">
+            {{ service.serviceName }} - ₹{{ service.cost }}
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="dialogType === 'stylist'">
+        <ul>
+          <li *ngFor="let stylist of dialogData">
+            {{ stylist.name }}
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="dialogType === 'message'">
+        <p>{{ dialogData }}</p>
+      </div>
+      <button class="close-btn" (click)="closeDialog()">Close</button>
+    </div>
+  </div>
+</div>

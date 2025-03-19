@@ -1,0 +1,139 @@
+@use "sass:color";
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&display=swap");
+
+$accent-color: #f5f5dc;
+$background-color: #fef9e7;
+$font-color: #85754e;
+$save-button-color: #85754e;
+$save-button-hover: darken($save-button-color, 10%);
+
+:host {
+  display: block;
+  padding: 20px;
+  background-color: $background-color;
+  font-family: "Noto Sans", serif;
+  color: $font-color;
+  height: 540px;
+}
+
+.appointments-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: $font-color;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+thead {
+  background-color: $accent-color;
+}
+
+thead th {
+  padding: 12px;
+  text-align: left;
+  color: $font-color;
+  font-weight: bold;
+}
+
+tbody tr:nth-child(even) {
+  background-color: lighten($accent-color, 10%);
+}
+
+tbody td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+.edit-btn {
+  background-color: $save-button-color;
+  color: white;
+}
+
+.edit-btn:hover {
+  background-color: $save-button-hover;
+}
+
+.delete-btn {
+  background-color: red;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: darkred;
+}
+
+.no-data {
+  text-align: center;
+  color: red;
+  font-size: 1.2rem;
+  margin-top: 15px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: 30px auto;
+  padding: 10px 0;
+}
+
+.pagination button {
+  background-color: $save-button-color;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.pagination button:disabled {
+  background-color: #f5f5dc;
+      cursor: not-allowed;
+}
+
+.pagination span {
+  font-size: 1.2rem;
+    color: $font-color;
+    text-align: center;
+}

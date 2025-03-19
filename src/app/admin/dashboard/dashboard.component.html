@@ -1,0 +1,41 @@
+<mat-drawer-container class="sidenav-container">
+  <mat-drawer mode="side" opened class="sidenav">
+    <div class="sidebar-header">
+      <p class="greeting">Hello, Admin!</p>
+    </div>
+    <mat-nav-list>
+      <a mat-list-item routerLink="statistics" routerLinkActive="active-link">
+        <mat-icon class="side-icon">insights</mat-icon>
+        <span class="side-heading">Statistics</span>
+      </a>
+      <a mat-list-item routerLink="franchise" routerLinkActive="active-link">
+        <mat-icon class="side-icon">business</mat-icon
+        ><span class="side-heading">Retailer </span>
+      </a>
+      <a
+        mat-list-item
+        routerLink="salon-management"
+        routerLinkActive="active-link"
+      >
+      <mat-icon class="side-icon">location_on</mat-icon>
+        <span class="side-heading">Management</span>
+      </a>
+      <a
+        mat-list-item
+        routerLink="create-moderator"
+        routerLinkActive="active-link"
+      >
+      <mat-icon class="side-icon">person_add</mat-icon>
+        <span class="side-heading">Create Moderator</span>
+      </a>
+    </mat-nav-list>
+    <div class="sidebar-footer">
+      <small>&copy; 2025 Eco Trace</small>
+    </div>
+  </mat-drawer>
+
+    <div class="dashboard-content">
+      <router-outlet></router-outlet>
+    </div>
+
+</mat-drawer-container>

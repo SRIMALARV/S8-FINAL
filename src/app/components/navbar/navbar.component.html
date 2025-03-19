@@ -1,0 +1,52 @@
+<mat-toolbar color="primary" class="navbar">
+  <img src="logo_eco.png" alt="Vintage Elegance" class="logo" />
+  <span class="spacer"></span>
+  <button
+    mat-button
+    routerLink="/"
+    routerLinkActive="active-link"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    Home
+  </button>
+
+  <mat-menu #servicesMenu="matMenu">
+    <button mat-menu-item routerLink="/haircare" routerLinkActive="active-link">
+      Order Materials
+    </button>
+  </mat-menu>
+
+  <button
+    mat-button
+    [matMenuTriggerFor]="servicesMenu"
+    routerLinkActive="active-link"
+  >
+    Services
+  </button>
+
+  <ng-container *ngIf="currentUser$ | async as user; else loginTpl">
+    <button
+      mat-button
+      routerLink="/admin/create-moderator"
+      routerLinkActive="active-link"
+      *ngIf="authService.hasRole('ROLE_ADMIN')"
+    >
+      Create Moderator
+    </button>
+    <button
+      mat-button
+      routerLink="/moderator/signup"
+      routerLinkActive="active-link"
+      *ngIf="authService.hasRole('ROLE_MODERATOR')"
+    >
+      Create User
+    </button>
+    <button mat-button (click)="logout()">Logout</button>
+  </ng-container>
+
+  <ng-template #loginTpl>
+    <button mat-button routerLink="/login" routerLinkActive="active-link">
+      Login
+    </button>
+  </ng-template>
+</mat-toolbar>

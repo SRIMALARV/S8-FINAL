@@ -1,0 +1,83 @@
+<div class="container">
+  <h2 class="title">Manage Requests</h2>
+
+  <table class="request-table">
+    <thead>
+      <tr>
+        <th>Location</th>
+        <th>Materials</th>
+        <th>Retailer</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let request of paginatedRequests">
+        <td>{{ request.state }} - {{ request.city }} - {{ request.outlet }}</td>
+        <td>
+          <button class="view-btn" (click)="viewServices(request.services)">
+            View Materials
+          </button>
+        </td>
+        <td>
+          <button class="view-btn" (click)="viewStylists(request.stylists)">
+            View Retailer
+          </button>
+        </td>
+        <td>
+          <input #message type="text" placeholder="Enter message" />
+          <div>
+            <button
+              class="accept-btn"
+              (click)="updateStatus(request._id, 'Accepted', message.value)"
+            >
+              Accept
+            </button>
+            <button
+              class="reject-btn"
+              (click)="updateStatus(request._id, 'Rejected', message.value)"
+            >
+              Reject
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="showServiceDialog" class="dialog-overlay">
+    <div class="dialog-box">
+      <h3>Services</h3>
+      <ul>
+        <li *ngFor="let service of selectedServices">
+          {{ service.serviceName }} - ${{ service.cost }} ({{ service.gender }})
+        </li>
+      </ul>
+      <button class="close-btn" (click)="closeDialog()">Close</button>
+    </div>
+  </div>
+  <div *ngIf="showStylistDialog" class="dialog-overlay">
+    <div class="dialog-box">
+      <h3>Stylists</h3>
+      <p><strong>Male:</strong> {{ selectedMaleStylists.join(", ") }}</p>
+      <p><strong>Female:</strong> {{ selectedFemaleStylists.join(", ") }}</p>
+      <button class="close-btn" (click)="closeDialog()">Close</button>
+    </div>
+  </div>
+
+  <div class="pagination-controls">
+    <button
+      class="pagination-btn"
+      (click)="prevPage()"
+      [disabled]="currentPage === 1"
+    >
+      Previous
+    </button>
+    <span class="page-indicator">Page {{ currentPage }}</span>
+    <button
+      class="pagination-btn"
+      (click)="nextPage()"
+      [disabled]="currentPage * itemsPerPage >= requests.length"
+    >
+      Next
+    </button>
+  </div>
+</div>

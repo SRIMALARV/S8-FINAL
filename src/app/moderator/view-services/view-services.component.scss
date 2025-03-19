@@ -1,0 +1,112 @@
+
+@use "sass:color";
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&display=swap");
+
+$accent-color: #f5f5dc;
+$background-color: #fef9e7;
+$font-color: #85754e;
+$save-button-color: #85754e;
+$save-button-hover: darken($save-button-color, 10%);
+
+.view-services-container {
+  width: 95%;
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: "Noto Sans", sans-serif;
+  color: $font-color;
+}
+
+h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: $font-color;
+}
+
+.filter-section {
+  text-align: center;
+  margin-bottom: 20px;
+
+  label {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: $font-color;
+    margin-right: 10px;
+  }
+
+  button {
+    padding: 10px 15px;
+    border: none;
+    font-weight: bold;
+    border-radius: 5px;
+    background-color: $save-button-color;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s ease;
+    margin: 0 5px;
+
+    &:hover {
+      background-color: $save-button-hover;
+    }
+
+    &.active {
+      background-color: darken($save-button-color, 15%);
+    }
+  }
+}
+
+.services-section,
+.stylists-section {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: lighten($accent-color, 10%);
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+
+  h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #85754e;
+    font-weight: bolder;
+  }
+
+  .loading {
+    text-align: center;
+    font-size: 1.2rem;
+    color: $font-color;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    
+    li {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      font-size: 1.1rem;
+      color: $font-color;
+    }
+
+    li:last-child {
+      border-bottom: none;
+    }
+
+    .price {
+      font-weight: bold;
+      color: darken($font-color, 10%);
+    }
+  }
+}
+
+.no-data {
+  text-align: center;
+  color: red;
+  font-size: 1.2rem;
+  margin-top: 15px;
+}

@@ -1,0 +1,49 @@
+<div class="view-services-container">
+  <h2>Materials & Retailers</h2>
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+  <div class="filter-section">
+    <label>Select Tier:</label>
+    <button
+      (click)="onGenderChange('Male')"
+      [class.active]="selectedGender === 'Male'"
+    >
+      Inbound
+    </button>
+    <button
+      (click)="onGenderChange('Female')"
+      [class.active]="selectedGender === 'Female'"
+    >
+      Production
+    </button>
+  </div>
+
+  <div class="services-section">
+    <h3>Materials for {{ selectedGender === 'Male' ? 'Inbound' : 'Production' }}</h3>
+    <div *ngIf="loadingServices" class="loading">Loading services...</div>
+    <ul *ngIf="!loadingServices && services.length > 0">
+      <li *ngFor="let service of services">
+        <span class="price">{{ service.name }}</span>
+        <span class="price">₹{{ service.cost }}</span>
+      </li>
+    </ul>
+    <div *ngIf="!loadingServices && services.length === 0" class="no-data">
+      No materials available.
+    </div>
+  </div>
+  <div class="stylists-section">
+    <h3>Retailer for {{ selectedGender === 'Male' ? 'Inbound' : 'Production' }}</h3>
+
+    <div *ngIf="loadingStylists" class="loading">Loading stylists...</div>
+
+    <ul *ngIf="!loadingStylists && stylists.length > 0">
+      <li *ngFor="let stylist of stylists">
+        <span class="price">{{ stylist }}</span>
+      </li>
+    </ul>
+
+    <div *ngIf="!loadingStylists && stylists.length === 0" class="no-data">
+      No retailer available.
+    </div>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+<form
+  [formGroup]="requestForm"
+  (ngSubmit)="submitRequest()"
+  class="request-form"
+>
+  <h2 class="title">Add a Request</h2>
+  <label>Select State:</label>
+  <select formControlName="state" (change)="fetchCities()">
+    <option *ngFor="let state of states" [value]="state">{{ state }}</option>
+  </select>
+
+  <label>Select City:</label>
+  <select formControlName="city" (change)="fetchOutlets()">
+    <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+  </select>
+
+  <label>Select Outlet:</label>
+  <select formControlName="outlet">
+    <option *ngFor="let outlet of outlets" [value]="outlet">
+      {{ outlet }}
+    </option>
+  </select>
+
+  <label>Materials:</label>
+  <div formArrayName="services">
+    <div
+      *ngFor="let service of services.controls; let i = index"
+      [formGroupName]="i"
+      class="service-box"
+    >
+      <input formControlName="serviceName" placeholder="Material Type" />
+      <input formControlName="cost" placeholder="Cost per Kg" type="number" />
+      <select formControlName="gender">
+        <option selected disabled value="">Select Tier</option>
+        <option value="Male">Inbound</option>
+        <option value="Female">Production</option>
+      </select>
+    </div>
+  </div>
+  <button type="button" (click)="addService()" class="add-btn">
+    + Add Material
+  </button>
+
+  <label>Retailer:</label>
+  <div formArrayName="stylists">
+    <div
+      *ngFor="let stylist of stylists.controls; let i = index"
+      [formGroupName]="i"
+      class="stylist-box"
+    >
+      <input formControlName="name" placeholder="Retailer Name" />
+      <select formControlName="gender">
+        <option selected disabled value="">Select Tier</option>
+        <option value="Male">Inbound</option>
+        <option value="Female">Production</option>
+      </select>
+    </div>
+  </div>
+  <button type="button" (click)="addStylist()" class="add-btn">
+    + Add Retailer
+  </button>
+
+  <button type="submit" class="submit-btn">Submit Request</button>
+</form>

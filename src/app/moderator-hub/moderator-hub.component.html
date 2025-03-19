@@ -1,0 +1,36 @@
+<div class="moderator-container">
+  <h2>Moderator Hub</h2>
+
+  <form [formGroup]="moderatorForm">
+    <label for="state">Select State:</label>
+    <select id="state" formControlName="state" (change)="fetchCities()">
+      <option value="" disabled>Select State</option>
+      <option *ngFor="let state of states" [value]="state">{{ state }}</option>
+    </select>
+
+    <label for="city">Select City:</label>
+    <select
+      id="city"
+      formControlName="city"
+      (change)="fetchOutlets()"
+      [disabled]="!moderatorForm.get('state')?.value"
+    >
+      <option value="" disabled>Select City</option>
+      <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+    </select>
+    <label for="outlet">Select Outlet:</label>
+    <select
+      id="outlet"
+      formControlName="outlet"
+      [disabled]="!moderatorForm.get('city')?.value"
+    >
+      <option value="" disabled>Select Outlet</option>
+      <option *ngFor="let outlet of outlets" [value]="outlet">
+        {{ outlet }}
+      </option>
+    </select>
+    <button type="button" (click)="proceed()" [disabled]="!moderatorForm.valid">
+      Proceed
+    </button>
+  </form>
+</div>

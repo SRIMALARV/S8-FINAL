@@ -1,0 +1,200 @@
+<div class="salon-list-container">
+  <h2>Outlet Management</h2>
+  <button class="create-btn" (click)="createSalon()">Create Outlet</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>State</th>
+        <th>City</th>
+        <th>Outlet</th>
+        <th>Materials</th>
+        <th>Retailer</th>
+        <th>Moderator</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let salon of salons">
+        <td>{{ salon.state }}</td>
+        <td>{{ salon.city }}</td>
+        <td>{{ salon.outletName }}</td>
+        <td>
+          <button class="view-btn" (click)="viewServices(salon.services)">
+            View
+          </button>
+        </td>
+        <td>
+          <button
+            class="view-btn"
+            (click)="viewStylists(salon.maleStylists, salon.femaleStylists)"
+          >
+            View
+          </button>
+        </td>
+        <td>{{ salon.moderator }}</td>
+        <td>
+          <button class="edit-btn" (click)="openEditDialog(salon)">Edit</button>
+          <button class="delete-btn" (click)="deleteSalon(salon.id)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <button (click)="prevPage()" [disabled]="page === 0">Previous</button>
+    <span>Page {{ page + 1 }} of {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="page >= totalPages - 1">
+      Next
+    </button>
+  </div>
+</div>
+
+<div *ngIf="showServiceDialog" class="dialog-overlay">
+  <div class="dialog-box">
+    <h3>Material</h3>
+    <ul>
+      <li *ngFor="let service of selectedServices">
+        {{ service.name }} - ${{ service.cost }}  ({{ service.gender === 'Male' ? 'Inbound' : 'Production' }})
+      </li>
+    </ul>
+    <button class="close-btn" (click)="closeDialog()">Close</button>
+  </div>
+</div>
+
+<div *ngIf="showStylistDialog" class="dialog-overlay">
+  <div class="dialog-box">
+    <h3>Retailer</h3>
+    <p><strong>Inbound:</strong> {{ selectedMaleStylists.join(", ") }}</p>
+    <p><strong>Outbound:</strong> {{ selectedFemaleStylists.join(", ") }}</p>
+    <button class="close-btn" (click)="closeDialog()">Close</button>
+  </div>
+</div>
+
+<div *ngIf="showEditDialog" class="dialog-overlay">
+  <div class="dialog-box">
+    <h3>Edit Salon</h3>
+    <form (ngSubmit)="saveSalon()">
+      <label>State:</label>
+      <input
+        type="text"
+        [(ngModel)]="editableSalon.state"
+        name="state"
+        required
+      />
+
+      <label>City:</label>
+      <input
+        type="text"
+        [(ngModel)]="editableSalon.city"
+        name="city"
+        required
+      />
+
+      <label>Outlet Name:</label>
+      <input
+        type="text"
+        [(ngModel)]="editableSalon.outletName"
+        name="outletName"
+        required
+      />
+
+      <label>Moderator:</label>
+      <input
+        type="text"
+        [(ngModel)]="editableSalon.moderator"
+        name="moderator"
+        required
+      />
+
+      <label>Materials:</label>
+      <ul>
+        <li *ngFor="let service of uniqueServices; let i = index">
+          <input
+            type="text"
+            [(ngModel)]="service.name"
+            name="serviceName{{ i }}"
+            placeholder="Service Name"
+            required
+          />
+          <input
+            type="number"
+            [(ngModel)]="service.cost"
+            name="serviceCost{{ i }}"
+            placeholder="Cost"
+            required
+          />
+          <select
+            [(ngModel)]="service.gender"
+            name="serviceGender{{ i }}"
+            required
+          >
+            <option value="Male">Inbound</option>
+            <option value="Female">Outbound</option>
+          </select>
+          <button type="button" class="delete-btn" (click)="removeService(i)">
+            Remove
+          </button>
+        </li>
+      </ul>
+      <button type="button" class="add-btn" (click)="addNewService()">
+        ➕ Add Service
+      </button>
+
+      <label>Inbound:</label>
+      <ul>
+        <li *ngFor="let stylist of editableSalon.maleStylists; let i = index">
+          <input
+            type="text"
+            [(ngModel)]="editableSalon.maleStylists[i]"
+            name="maleStylist{{ i }}"
+            placeholder="Stylist Name"
+            required
+          />
+          <button
+            type="button"
+            class="delete-btn"
+            (click)="removeMaleStylist(i)"
+          >
+            Remove
+          </button>
+        </li>
+      </ul>
+      <button type="button" class="add-btn" (click)="addNewMaleStylist()">
+        ➕ Add Inbound
+      </button>
+
+      <label>Outbound:</label>
+      <ul>
+        <li *ngFor="let stylist of editableSalon.femaleStylists; let i = index">
+          <input
+            type="text"
+            [(ngModel)]="editableSalon.femaleStylists[i]"
+            name="femaleStylist{{ i }}"
+            placeholder="Stylist Name"
+            required
+          />
+          <button
+            type="button"
+            class="delete-btn"
+            (click)="removeFemaleStylist(i)"
+          >
+            Remove
+          </button>
+        </li>
+      </ul>
+      <button type="button" class="add-btn" (click)="addNewFemaleStylist()">
+        ➕ Add Outbound
+      </button>
+
+      <div class="dialog-actions">
+        <button type="submit" class="save-btn">Save</button>
+        <button type="button" class="close-btn" (click)="closeEditDialog()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

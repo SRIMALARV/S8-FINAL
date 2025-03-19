@@ -1,0 +1,42 @@
+<div class="moderator-container">
+  <h2>Create Moderator Account</h2>
+
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input
+        [(ngModel)]="username"
+        name="username"
+        type="text"
+        id="username"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        [(ngModel)]="email"
+        name="email"
+        type="email"
+        id="email"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        [(ngModel)]="password"
+        name="password"
+        type="password"
+        id="password"
+        required
+      />
+    </div>
+
+    <div *ngIf="error" class="alert error">{{ error }}</div>
+    <div *ngIf="success" class="alert success">{{ success }}</div>
+
+    <button type="submit">Create Moderator</button>
+  </form>
+</div>

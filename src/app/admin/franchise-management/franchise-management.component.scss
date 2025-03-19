@@ -1,0 +1,165 @@
+@use "sass:color";
+
+$primary-color: #f5f5dc;
+$background-color: #fef9e7;
+$font-color: #85754e;
+$button-hover: darken($primary-color, 10%);
+$gold: #85754e;
+$black: black;
+$red: #fa8072;
+$white: white;
+
+.container {
+  padding: 20px;
+  background-color: $white;
+  color: $font-color;
+  font-family: "Noto Sans", serif;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  margin: auto;
+}
+
+.title {
+  text-align: center;
+  color: $gold;
+  margin-bottom: 20px;
+}
+
+.request-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+
+  thead th {
+    background-color: $primary-color;
+    color: $gold;
+    padding: 12px;
+    text-align: left;
+  }
+
+  tbody td {
+    padding: 12px;
+    border-bottom: 1px solid $gold;
+  }
+}
+.view-btn {
+  background-color: #f5f5dc;
+  color: $gold;
+}
+
+.view-btn:hover {
+  background-color: $button-hover;
+}
+
+input[type="text"] {
+  padding: 8px;
+  border: 1px solid $gold;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+
+button {
+  margin: 5px;
+  padding: 8px 12px;
+  border: none;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+.accept-btn {
+  background-color: $gold;
+  color: $white;
+}
+
+.accept-btn:hover {
+  background-color: $button-hover;
+}
+
+.reject-btn {
+  background-color: $red;
+  color: $white;
+}
+
+.reject-btn:hover {
+  background-color: darken($red, 10%);
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.pagination-btn {
+  background-color: lighten($gold, 10%);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.pagination-btn:disabled {
+  background-color: $primary-color;
+  cursor: not-allowed;
+}
+
+.page-indicator {
+  margin: 0 15px;
+  font-size: 1.1rem;
+}
+
+.dialog-overlay {
+  margin-left: -150px;
+  padding-top: 150px;
+  position: fixed;
+  top: 0;
+  left: 100;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialog-box {
+  background: $white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.dialog-box h3 {
+  color: $font-color;
+  margin-bottom: 15px;
+}
+
+.dialog-box ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 15px;
+}
+
+.dialog-box ul li {
+  color: $black;
+  padding: 8px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
+.close-btn {
+  background-color: $red;
+  color: $white;
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+
+.close-btn:hover {
+  background-color: darkred;
+}

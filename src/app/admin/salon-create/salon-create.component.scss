@@ -1,0 +1,134 @@
+@use "sass:color";
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&display=swap");
+
+$accent-color: #f5f5dc;
+$background-color: #fef9e7;
+$font-color: #85754e;
+$save-button-color: #85754e;
+$save-button-hover: darken($save-button-color, 10%);
+
+:host {
+  display: block;
+  padding: 20px;
+  background-color: $background-color;
+  font-family: "Noto Sans", serif;
+  color: $font-color;
+}
+
+.form-container {
+  width: 900px;
+  margin: auto;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: $font-color;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+label {
+  margin-bottom: 5px;
+  color: $font-color;
+  font-weight: bold;
+}
+
+input,
+select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  font-size: 1rem;
+  margin-left: 10px;
+}
+
+.section {
+  margin-top: 20px;
+}
+
+.section-title {
+  font-size: 1.1rem;
+  color: $font-color;
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.service-row,
+.stylist-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.service-row input,
+.service-row select {
+  flex: 1;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+.add-btn {
+  background-color: $accent-color;
+  color: #85754e;
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+
+.add-btn:hover {
+  background-color: darken($accent-color, 10%);
+}
+
+.remove-btn {
+  background-color: red;
+  color: white;
+}
+
+.remove-btn:hover {
+  background-color: darkred;
+}
+
+.submit-btn {
+  width: 100%;
+  background-color: $save-button-color;
+  color: white;
+  font-size: 1.1rem;
+  margin-top: 15px;
+}
+
+.submit-btn:hover {
+  background-color: $save-button-hover;
+}
+
+.error {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+}

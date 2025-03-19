@@ -1,0 +1,128 @@
+<div class="outer-container">
+  <form
+    [formGroup]="appointmentForm"
+    (ngSubmit)="submitAppointment()"
+    class="appointment-form"
+  >
+    <h2 class="form-title">
+      <i class="fas fa-calendar-check"></i> Book Your Materials
+    </h2>
+
+    <div class="form-group">
+      <label><i class="fas fa-map-marker-alt"></i> State:</label>
+      <select formControlName="state" (change)="onStateChange($event)">
+        <option *ngFor="let state of states" [value]="state">
+          {{ state }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label><i class="fas fa-city"></i> City:</label>
+      <select formControlName="city" (change)="onCityChange($event)">
+        <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label><i class="fas fa-store"></i> Outlet:</label>
+      <select formControlName="outlet" (change)="onOutletChange($event)">
+        <option *ngFor="let outlet of outlets" [value]="outlet">
+          {{ outlet }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label><i class="fas fa-user"></i> Tier:</label>
+      <select formControlName="gender" (change)="onGenderChange($event)">
+        <option value="Male">Inbound</option>
+        <option value="Female">Production</option>
+      </select>
+    </div>
+
+    <div class="services-and-stylists">
+      <label><i class="fas fa-cut"></i> Materials:</label>
+      <ul *ngIf="services.length > 0; else noServices" class="services-list">
+        <li *ngFor="let service of services">
+          <label class="checkbox-label">
+            <input type="checkbox" (change)="toggleServiceSelection(service)" />
+            {{ service.name }} - ₹{{ service.cost }}
+          </label>
+    
+          <input
+          *ngIf="service.selected"
+          type="number"
+          min="1"
+          [(ngModel)]="service.quantity"
+          [ngModelOptions]="{standalone: true}"
+          (ngModelChange)="updateQuantity(service)"
+          class="quantity-input"
+        />        
+        </li>
+      </ul>
+    
+      <ng-template #noServices>
+        <p class="info-text">No Materials available.</p>
+      </ng-template>
+        </div>
+    
+
+    <div class="services-and-stylists">
+      <label><i class="fas fa-user-tie"></i> Retailer:</label>
+      <ul *ngIf="stylists.length > 0; else noStylists" class="stylists-list">
+        <li *ngFor="let stylist of stylists">
+          <label class="checkbox-label">
+            <input type="checkbox" (change)="toggleStylistSelection(stylist)" />
+            {{ stylist }}
+          </label>
+        </li>
+      </ul>
+      <ng-template #noStylists>
+        <p class="info-text">No Retailer available.</p>
+      </ng-template>
+    </div>
+
+    <h4 class="total-cost">
+      <i class="fas fa-coins"></i> Total Cost: ₹{{ totalCost }}
+    </h4>
+
+    <div class="form-group">
+      <label><i class="fas fa-calendar-alt"></i>Expected Date:</label>
+      <input type="date" formControlName="date" />
+    </div>
+
+    <div class="form-group">
+      <label><i class="fas fa-clock"></i> Time:</label>
+      <input type="time" formControlName="time" />
+    </div>
+
+    <div class="form-group">
+      <label><i class="fas fa-user"></i> Name:</label>
+      <input type="text" formControlName="name" />
+    </div>
+
+    <div class="form-group">
+      <label><i class="fas fa-envelope"></i> Email:</label>
+      <input type="email" formControlName="email" />
+    </div>
+
+    <div class="form-group">
+      <label><i class="fas fa-phone"></i> Phone:</label>
+      <input type="text" formControlName="phone" />
+    </div>
+
+    <div class="form-group">
+      <label><i class="fas fa-comment-dots"></i> Message:</label>
+      <textarea formControlName="message"></textarea>
+    </div>
+
+    <div class="btn-container">
+      <button type="button" class="btn-primary" (click)="submitAppointment()">
+        <i class="fas fa-credit-card"></i> Proceed to Payment
+      </button>
+    </div>
+
+    <app-payment [appointmentData]="appointmentData"></app-payment>
+  </form>
+</div>

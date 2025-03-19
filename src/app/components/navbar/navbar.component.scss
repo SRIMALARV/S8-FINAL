@@ -1,0 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&display=swap");
+
+.navbar {
+  background-color: black;
+  color: gold;
+  padding: 10px;
+  height: 100px;
+
+  .logo {
+    height: 70px;
+  }
+  .logo {
+ 
+    width:200px;
+  }
+  .spacer {
+    flex-grow: 1;
+  }
+
+  button {
+    font-family: "Noto Sans", serif;
+    font-size: 16px;
+    color: white !important;
+  }
+
+  button:hover {
+    background-color: rgba(255, 215, 0, 0.2);
+  }
+  .active-link {
+    color: gold !important;
+    border-bottom: 2px solid gold;
+  }
+}

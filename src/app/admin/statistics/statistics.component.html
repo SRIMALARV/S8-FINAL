@@ -1,0 +1,41 @@
+<div class="statistics-container">
+  <h2>Traceability Statistics</h2>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <h3>Total Materials</h3>
+      <p>{{ totalSalons }}</p>
+    </div>
+   
+    <div class="stat-card">
+      <h3>Total Revenue</h3>
+      <p>₹{{ totalRevenue }}</p>
+    </div>
+    <div class="stat-card highlight">
+      <h3>Top Retailer Outlet</h3>
+      <p>{{ maxRevenueOutlet }}</p>
+    </div>
+    <div class="stat-card">
+      <h3>Total Material Transaction</h3>
+      <p>{{ totalServicesDone }}</p>
+    </div>
+    <div class="stat-card">
+      <h3>Inbound Transaction</h3>
+      <p>{{ maleAppointments }}</p>
+    </div>
+    <div class="stat-card">
+      <h3>Outbound Transaction</h3>
+      <p>{{ femaleAppointments }}</p>
+    </div>
+  </div>
+
+  <div class="chart-container">
+    <canvas id="revenueChart"></canvas>
+  </div>
+
+  <div class="chart-container">
+    <canvas id="servicesChart"></canvas>
+  </div>
+
+ 
+
+</div>

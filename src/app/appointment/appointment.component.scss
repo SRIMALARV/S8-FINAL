@@ -1,0 +1,209 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css");
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&display=swap");
+
+body {
+  font-family: "Noto Sans", sans-serif;
+  animation: bgAnimation 8s infinite alternate ease-in-out;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    to right,
+    rgba(196, 154, 108, 0.9),
+    rgba(121, 68, 59, 0.9)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@keyframes glitterBackground {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+.outer-container {
+  animation: glowing 3s infinite alternate;
+  margin-top: -20px;
+}
+.info-text {
+  color: #e97451;
+}
+.services-and-stylists {
+  margin-bottom: 15px;
+  display: block;
+  align-items: center;
+
+  label {
+    width: 120px;
+    font-family: 20px;
+    font-weight: bold;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
+.services-list {
+  list-style: none;
+  padding: 0;
+}
+
+.services-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.checkbox-label {
+  flex-grow: 1;
+}
+
+.quantity-input {
+  width: 100px;
+  text-align: center;
+  margin-left: 10px;
+}
+
+.appointment-form {
+  background: linear-gradient(145deg, #f9e6c7, #e1b07e);
+  border-radius: 10px;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2),
+    -10px -10px 20px rgba(255, 255, 255, 0.3),
+    inset 0 0 8px rgba(255, 255, 255, 0.4);
+  transition: transform 0.3s ease-in-out;
+
+  background-blend-mode: soft-light;
+  font-family: "Noto Sans", sans-serif;
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+
+  .form-title {
+    text-align: center;
+    font-size: 26px;
+    font-weight: bolder;
+    color: #333;
+    margin-bottom: 15px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+
+    label {
+      width: 120px;
+      font-family: 20px;
+      font-weight: bold;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    select,
+    input,
+    textarea {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      outline: none;
+      font-size: 14px;
+      transition: all 0.3s ease-in-out;
+
+      &:focus {
+        border-color: #e67e22;
+        box-shadow: 0px 0px 5px rgba(230, 126, 34, 0.5);
+      }
+    }
+
+    input[type="date"],
+    input[type="time"] {
+      position: relative;
+      cursor: pointer;
+      color: #333;
+    }
+
+    input[type="date"]:hover,
+    input[type="time"]:hover {
+      border-color: #e67e22;
+    }
+  }
+
+  .services-list,
+  .stylists-list {
+    list-style: none;
+    padding: 0;
+
+    li {
+      display: flex;
+      align-items: center;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin: 5px 0;
+      cursor: pointer;
+      transition: 0.3s;
+
+      &:hover {
+        background: rgba(230, 126, 34, 0.1);
+      }
+
+      .checkbox-label {
+        font-size: 20px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+    }
+  }
+
+  .total-cost {
+    text-align: right;
+    font-size: 18px;
+    font-weight: 600;
+    color: #e67e22;
+  }
+
+  .btn-container {
+    text-align: center;
+    margin-top: 15px;
+
+    .btn-primary {
+      background: #e67e22;
+      color: #fff;
+      border: none;
+      padding: 12px 18px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+
+      &:hover {
+        background: #d35400;
+      }
+
+      i {
+        font-size: 18px;
+      }
+    }
+  }
+}
