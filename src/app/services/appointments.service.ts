@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Appointment } from '../../models/appointments.model';
 
@@ -52,6 +52,10 @@ export class AppointmentService {
     );
   }
 
+  updateStatus(appointmentId: string, status: string): Observable<string> {
+    return this.http.put<string>(`${this.baseUrl}/${appointmentId}/status`, { status });
+  }
+
   getAppointmentById(id: string): Observable<Appointment> {
     return this.http.get<Appointment>(`${this.baseUrl}/${id}`);
   }
@@ -64,10 +68,14 @@ export class AppointmentService {
   }
 
   updatePaymentStatus(paymentId: string, status: string): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${paymentId}/update-status`, {
-      status,
-    });
+    const url = `${this.apiUrl}/${paymentId}/update-status`;
+    const body = { status };  // Ensure 'status' matches backend key
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  
+    return this.http.put<any>(url, body, { headers });
   }
+  
+  
 
   getAppointmentsByOutlet(outlet: string): Observable<Appointment[]> {
     return this.http.get<Appointment[]>(`${this.apiUrl}/outlet/${outlet}`).pipe(

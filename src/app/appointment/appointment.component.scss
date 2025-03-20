@@ -1,5 +1,6 @@
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css");
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&display=swap");
+$background-color: #fef9e7;
 
 body {
   font-family: "Noto Sans", sans-serif;
@@ -29,6 +30,10 @@ body {
 .outer-container {
   animation: glowing 3s infinite alternate;
   margin-top: -20px;
+}
+
+.outer-container[_ngcontent-ng-c3222589600] {
+  background-color: $background-color;
 }
 .info-text {
   color: #e97451;

@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  AfterViewInit,
-  ViewChild,
-  ElementRef,
-} from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { AppointmentService } from '../../services/appointments.service';
 import { Appointment } from '../../../models/appointments.model';
 import { CommonModule, NgFor } from '@angular/common';
@@ -39,7 +33,7 @@ export class ModeratorStatisticsComponent implements OnInit, AfterViewInit {
   @ViewChild('revenueChart') revenueChartRef!: ElementRef;
   revenueChart!: Chart;
 
-  constructor(private appointmentService: AppointmentService) {}
+  constructor(private appointmentService: AppointmentService, private cdRef: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.selectedOutlet = localStorage.getItem('selectedOutlet') || '';
@@ -55,46 +49,74 @@ export class ModeratorStatisticsComponent implements OnInit, AfterViewInit {
     this.initChart();
     this.initServiceChart();
   }
-
   fetchAppointments(): void {
-    this.appointmentService
-      .getAppointmentsByOutlet(this.selectedOutlet)
-      .subscribe({
-        next: (data) => {
-          this.appointments = data.filter((appt) => {
-            const apptDate = moment(appt.date, 'YYYY-MM-DD');
-            return (
-              apptDate.format('YYYY') === this.selectedYear &&
-              apptDate.format('MMMM') === this.selectedMonth
-            );
-          });
-
-          this.applyFilter();
-        },
-      });
+    this.appointmentService.getAppointmentsByOutlet(this.selectedOutlet).subscribe({
+      next: (data) => {
+        console.log('Fetched Appointments:', data); // Debugging
+        this.appointments = data.filter((appt) => {
+          const apptDate = moment(appt.date, 'YYYY-MM-DD', true); // Ensure strict parsing
+          const isValid = apptDate.isValid();
+  
+          if (!isValid) {
+            console.warn(`Invalid date format: ${appt.date}`);
+            return false;
+          }
+  
+          return (
+            apptDate.year().toString() === this.selectedYear &&
+            apptDate.format('MMMM') === this.selectedMonth
+          );
+        });
+  
+        console.log('Filtered Appointments After Fetch:', this.appointments);
+        this.applyFilter();
+      },
+      error: (err) => {
+        console.error('Error fetching appointments:', err);
+      },
+    });
   }
-
+  
   applyFilter(): void {
-    const now = moment();
+    console.log('Before Filtering:', this.appointments.length, this.appointments);
+  
+    const now = moment(); // Current date
     this.filteredAppointments = this.appointments.filter((appt) => {
-      const appointmentDate = moment(appt.date, 'YYYY-MM-DD');
+      const appointmentDate = moment(appt.date, 'YYYY-MM-DD', true);
+      const isValid = appointmentDate.isValid();
+  
+      if (!isValid) {
+        console.warn(`Skipping invalid date format: ${appt.date}`);
+        return false;
+      }
+  
+      let matches = false;
       switch (this.filterType) {
         case 'day':
-          return appointmentDate.isSame(now, 'day');
+          matches = appointmentDate.isSame(now, 'day');
+          break;
         case 'week':
-          return appointmentDate.isSame(now, 'week');
+          matches = appointmentDate.isSame(now, 'isoWeek'); // Ensure proper week comparison
+          break;
         case 'month':
-          return appointmentDate.isSame(now, 'month');
+          matches = appointmentDate.isSame(now, 'month');
+          break;
         case 'year':
-          return appointmentDate.isSame(now, 'year');
+          matches = appointmentDate.isSame(now, 'year');
+          break;
         default:
-          return true;
+          matches = true;
       }
+  
+      console.log(`Filter Type: ${this.filterType}, Matches: ${matches}`);
+      return matches;
     });
-
+  
+    console.log('After Filtering:', this.filteredAppointments.length, this.filteredAppointments);
     this.calculateStatistics();
+    this.cdRef.detectChanges();
   }
-
+  
   calculateStatistics(): void {
     this.totalRevenue = this.filteredAppointments.reduce(
       (sum, appt) => sum + appt.totalCost,
@@ -138,9 +160,9 @@ export class ModeratorStatisticsComponent implements OnInit, AfterViewInit {
 
   setFilter(filter: string): void {
     this.filterType = filter;
-    this.applyFilter();
+    this.fetchAppointments();
   }
-
+  
   initServiceChart(): void {
     this.serviceChart = new Chart(this.serviceChartRef.nativeElement, {
       type: 'bar',
@@ -148,7 +170,7 @@ export class ModeratorStatisticsComponent implements OnInit, AfterViewInit {
         labels: [],
         datasets: [
           {
-            label: 'Service Booking Count',
+            label: 'Material Booking Count',
             data: [],
             backgroundColor: 'rgba(75, 192, 192, 0.6)',
             borderColor: 'rgba(75, 192, 192, 1)',
@@ -168,30 +190,62 @@ export class ModeratorStatisticsComponent implements OnInit, AfterViewInit {
   }
 
   updateServiceChart(): void {
+    if (this.serviceChart) {
+      this.serviceChart.destroy(); // Destroy old instance
+    }
+  
     const labels = this.serviceStats.map((s) => s.name);
     const data = this.serviceStats.map((s) => s.count);
-
-    this.serviceChart.data.labels = labels;
-    this.serviceChart.data.datasets[0].data = data;
-    this.serviceChart.update();
+  
+    this.serviceChart = new Chart(this.serviceChartRef.nativeElement, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Service Booking Count',
+            data: data,
+            backgroundColor: 'rgba(75, 192, 192, 0.6)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1,
+          },
+        ],
+      },
+    });
   }
+  
 
   updateChart(): void {
+    if (this.revenueChart) {
+      this.revenueChart.destroy(); // Destroy old instance
+    }
+  
     const monthlyRevenue: { [key: string]: number } = {};
     this.months.forEach((month) => (monthlyRevenue[month] = 0));
-
+  
     this.filteredAppointments.forEach((appt) => {
       const month = moment(appt.date, 'YYYY-MM-DD').format('MMMM');
       monthlyRevenue[month] += appt.totalCost;
     });
-
-    this.revenueChart.data.labels = this.months;
-    this.revenueChart.data.datasets[0].data = this.months.map(
-      (month) => monthlyRevenue[month]
-    );
-    this.revenueChart.update();
+  
+    this.revenueChart = new Chart(this.revenueChartRef.nativeElement, {
+      type: 'bar',
+      data: {
+        labels: this.months,
+        datasets: [
+          {
+            label: 'Monthly Revenue',
+            data: this.months.map((month) => monthlyRevenue[month]),
+            backgroundColor: '#d4a373',
+            borderColor: '#6d4c41',
+            borderWidth: 1,
+          },
+        ],
+      },
+    });
   }
-
+  
+  
   initChart(): void {
     this.revenueChart = new Chart(this.revenueChartRef.nativeElement, {
       type: 'bar',

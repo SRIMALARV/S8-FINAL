@@ -1,4 +1,3 @@
-
 <div class="appointments-container">
   <h2>Your Orders</h2>
 
@@ -25,7 +24,14 @@
         <td>{{ appointment.name }}</td>
         <td>{{ appointment.email }}</td>
         <td>{{ appointment.phone }}</td>
-        <td>{{ appointment.message }}</td>
+        <td>
+          <select [(ngModel)]="appointment.message" (change)="updateStatus(appointment?.id!, appointment.message)">
+            <option [selected]="true" [disabled]="true">{{ appointment.paymentStatus || 'Choose Status' }}</option>
+            <option *ngFor="let status of statusOptions" [value]="status">
+              {{ status }}
+            </option>
+          </select>
+        </td>
         <td>₹{{ appointment.totalCost }}</td>
       </tr>
     </tbody>
@@ -34,6 +40,6 @@
   <div class="pagination" *ngIf="totalPages > 1">
     <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
     <span>Page {{ currentPage }} of {{ totalPages }}</span>
-    <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+    <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage >= totalPages">Next</button>
   </div>
 </div>

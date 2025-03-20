@@ -45,7 +45,6 @@ export class StatisticsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.renderStylistsChart();
       this.renderRevenueChart();
       this.renderServicesChart();
       this.renderGenderServiceChart();
@@ -68,7 +67,6 @@ export class StatisticsComponent implements OnInit, AfterViewInit {
         (acc: number, salon: any) => acc + salon.femaleStylists.length,
         0
       );
-      this.renderStylistsChart();
     });
   }
 
@@ -160,37 +158,6 @@ export class StatisticsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  renderStylistsChart() {
-    new Chart('stylistsChart', {
-      type: 'pie',
-      data: {
-        labels: ['Male Stylists', 'Female Stylists'],
-        datasets: [
-          {
-            data: [this.maleStylistsCount, this.femaleStylistsCount],
-            backgroundColor: ['#007bff', '#ff6384'],
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          title: {
-            display: true,
-            text: 'Gender Distribution of Stylists',
-            font: {
-              size: 18,
-            },
-            padding: {
-              top: 20,
-              bottom: 10,
-            },
-          },
-        },
-      },
-    });
-  }
 
   renderRevenueChart() {
     new Chart('revenueChart', {
@@ -266,12 +233,12 @@ export class StatisticsComponent implements OnInit, AfterViewInit {
 
   renderServicesChart() {
     new Chart('servicesChart', {
-      type: 'bar',
+      type: 'line',
       data: {
         labels: this.servicesByOutlet.map((o) => o.outlet),
         datasets: [
           {
-            label: 'Appointments Count',
+            label: 'Orders Count',
             data: this.servicesByOutlet.map((o) => o.serviceCount),
             backgroundColor: '#4caf50',
           },

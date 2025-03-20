@@ -1,15 +1,28 @@
 <div class="haircare-container">
-  <div class="text-content">
-    <h1>
-      Nourish Your <span class="highlight">Skin</span><br />
-      Embrace Your Glow.<br />
-      <span class="highlight">Luxury BodyCare</span><br />
-      for a Radiant You!
-    </h1>
+  <div class="container">
+    <h2>Track Your Order</h2>
 
-    <button class="book-now" (click)="navigateToAppointment()">Book Now</button>
+    <div class="input-container">
+      <input type="text" [(ngModel)]="industryName" placeholder="Enter Industry Name" />
+      <button (click)="fetchAppointments()">Search</button>
+    </div>
+
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+    <div class="cards-container">
+      <div class="card" *ngFor="let appointment of appointments">
+        <h3>{{ appointment.name }}</h3>
+        <hr>
+        <p><strong>Outlet:</strong> {{ appointment.outlet }}</p>
+        <p><strong>Date:</strong> {{ appointment.date }}</p>
+        <p><strong>Status:</strong> {{ appointment.paymentStatus }}</p>
+        <p><strong>Materials:</strong></p>
+        <ul>
+          <li *ngFor="let service of appointment.services">{{ service.name }}</li>
+        </ul>
+        <p><strong>Retailers:</strong> {{ appointment.stylists?.join(', ') }}</p>
+
+      </div>
+    </div>
   </div>
-  <div class="image-container">
-    <img src="b-one.jpg" alt="Hair Model" />
-  </div>
+
 </div>

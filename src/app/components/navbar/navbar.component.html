@@ -9,12 +9,24 @@
   >
     Home
   </button>
-
   <mat-menu #servicesMenu="matMenu">
-    <button mat-menu-item routerLink="/haircare" routerLinkActive="active-link">
+    <button 
+      mat-menu-item 
+      routerLink="/haircare" 
+      routerLinkActive="active-link" 
+      [routerLinkActiveOptions]="{ exact: true }">
       Order Materials
     </button>
+  
+    <button 
+      mat-menu-item 
+      routerLink="/bodycare" 
+      routerLinkActive="active-link" 
+      [routerLinkActiveOptions]="{ exact: true }">
+      View Order
+    </button>
   </mat-menu>
+  
 
   <button
     mat-button
